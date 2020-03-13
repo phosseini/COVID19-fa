@@ -1,12 +1,13 @@
 import pandas as pd
 import data_utils as du
+import pre_processing as pp
 
 
 class DataLoader:
     def __init__(self):
         self.data_path = "data/"
 
-    def load_data(self, count=500):
+    def load_data(self, count=1000):
         """
         reading tweets' excel data
         :return:
@@ -30,10 +31,13 @@ class DataLoader:
                 if row["tweet_type"] in filters["tweet_type"] and row["lang"] in filters["lang"] and any(
                         tag in row["text"] for tag in tags):
                     df_filtered = df_filtered.append({"id": row["id"], "tweet_url": row["tweet_url"],
-                                                      "text": row["text"], "user_description": row["user_description"],
+                                                      "text": pp.clean_persian_tweets(row["text"]), "user_description": row["user_description"],
                                                       "user_followers_count": row["user_followers_count"],
                                                       "user_friends_count": row["user_friends_count"],
                                                       "user_location": row["user_location"],
                                                       "user_verified": row["user_verified"]},
                                                      ignore_index=True)
-        return df
+        return df_filtered
+
+
+DataLoader().load_data()
