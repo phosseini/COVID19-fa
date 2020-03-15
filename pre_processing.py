@@ -1,4 +1,5 @@
 import string
+import emoji
 import re
 
 
@@ -13,12 +14,18 @@ def remove_url(text):
     return result
 
 
+def emoji_free_text(text):
+    return emoji.get_emoji_regexp().sub(r'', text)
+
+
 def clean_persian_tweets(tweet):
     # removing URLs
     tweet = remove_url(tweet)
 
+    tweet = emoji_free_text(tweet)
+
     # removing non-relevant punctuation marks
-    puncs = list("؟!,،?.؛")
+    puncs = list("|؟!,،?.؛")
     for punc in puncs:
         tweet = tweet.replace(punc, " ")
 
