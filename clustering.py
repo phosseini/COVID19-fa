@@ -8,6 +8,52 @@ from sklearn.manifold import TSNE
 from sklearn.cluster import KMeans, MiniBatchKMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
 from data_reader import DataLoader
+from mpl_toolkits.mplot3d import Axes3D
+
+
+def visualize_cluster(est):
+    fig = plt.figure(1, figsize=(4, 3))
+    ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=48, azim=134)
+    labels = est.labels_
+
+    ax.scatter(tfidf[:, 3], tfidf[:, 0], tfidf[:, 2],
+               c=labels.astype(np.float), edgecolor='k')
+
+    ax.w_xaxis.set_ticklabels([])
+    ax.w_yaxis.set_ticklabels([])
+    ax.w_zaxis.set_ticklabels([])
+    ax.set_xlabel('Petal width')
+    ax.set_ylabel('Sepal length')
+    ax.set_zlabel('Petal length')
+    ax.set_title('8 clusters')
+    ax.dist = 12
+
+    # Plot the ground truth
+    fig = plt.figure(1, figsize=(4, 3))
+    ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=48, azim=134)
+
+    for name, label in [('Setosa', 0),
+                        ('Versicolour', 1),
+                        ('Virginica', 2)]:
+        ax.text3D(tfidf[clusters == label, 3].mean(),
+                  tfidf[clusters == label, 0].mean(),
+                  tfidf[clusters == label, 2].mean() + 2, name,
+                  horizontalalignment='center',
+                  bbox=dict(alpha=.2, edgecolor='w', facecolor='w'))
+    # Reorder the labels to have colors matching the cluster results
+    y = np.choose(clusters, [1, 2, 0]).astype(np.float)
+    ax.scatter(tfidf[:, 3], tfidf[:, 0], tfidf[:, 2], c=y, edgecolor='k')
+
+    ax.w_xaxis.set_ticklabels([])
+    ax.w_yaxis.set_ticklabels([])
+    ax.w_zaxis.set_ticklabels([])
+    ax.set_xlabel('Petal width')
+    ax.set_ylabel('Sepal length')
+    ax.set_zlabel('Petal length')
+    ax.set_title('Ground Truth')
+    ax.dist = 12
+
+    fig.show()
 
 
 def find_optimal_clusters(max_k):
@@ -40,7 +86,7 @@ n_samples = 1000000
 n_features = 400
 do_elbow_kmeans = False
 do_elbow_mini_kmeans = True
-save_doc_cluster_file = True
+save_doc_cluster_file = False
 fit_kmeans = True
 
 # loading data
@@ -85,10 +131,13 @@ if fit_kmeans:
     n_cluster = 8
     n_annotation_samples = 30
 
-    kmeans = MiniBatchKMeans(n_clusters=n_cluster, batch_size=2048, random_state=20).fit(tfidf)
-    clusters = MiniBatchKMeans(n_clusters=n_cluster, batch_size=2048, random_state=20).fit_predict(tfidf)
+    km = MiniBatchKMeans(n_clusters=n_cluster, batch_size=2048, random_state=20)
+    kmeans = km.fit(tfidf)
+    clusters = kmeans.predict(tfidf)
 
     get_top_keywords(tfidf, clusters, tfidf_vectorizer.get_feature_names(), 15)
+
+    # visualize_cluster(kmeans)
 
     doc_cluster = pd.DataFrame(columns=["doc", "cluster"])
     for doc in data_samples:
@@ -105,5 +154,5 @@ if fit_kmeans:
         for index, row in samples.iterrows():
             doc_annotation = doc_annotation.append({"doc": row["doc"], "cluster": row["cluster"], "label": ""},
                                                    ignore_index=True)
-
-    doc_annotation.to_excel("data/doc_annotation.xlsx")
+    if save_doc_cluster_file:
+        doc_annotation.to_excel("data/doc_annotation.xlsx")
