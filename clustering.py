@@ -3,57 +3,40 @@ import matplotlib.cm as cm
 import numpy as np
 import pandas as pd
 
-from sklearn.decomposition import PCA
-from sklearn.manifold import TSNE
 from sklearn.cluster import KMeans, MiniBatchKMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
 from data_reader import DataLoader
-from mpl_toolkits.mplot3d import Axes3D
+from sklearn.manifold import TSNE
+from sklearn.decomposition import PCA
 
 
-def visualize_cluster(est):
-    fig = plt.figure(1, figsize=(4, 3))
-    ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=48, azim=134)
-    labels = est.labels_
+def visualize_clusters(tf_idf_matrix, labels):
+    labels_color_map = {
+        0: '#20b2aa', 1: '#ff7373', 2: '#ffe4e1', 3: '#005073', 4: '#4d0404',
+        5: '#ccc0ba', 6: '#4700f9', 7: '#f6f900', 8: '#00f91d', 9: '#da8c49'
+    }
+    pca_num_components = 2
+    tsne_num_components = 2
 
-    ax.scatter(tfidf[:, 3], tfidf[:, 0], tfidf[:, 2],
-               c=labels.astype(np.float), edgecolor='k')
+    X = tf_idf_matrix.todense()
 
-    ax.w_xaxis.set_ticklabels([])
-    ax.w_yaxis.set_ticklabels([])
-    ax.w_zaxis.set_ticklabels([])
-    ax.set_xlabel('Petal width')
-    ax.set_ylabel('Sepal length')
-    ax.set_zlabel('Petal length')
-    ax.set_title('8 clusters')
-    ax.dist = 12
+    # ----------------------------------------------------------------------------------------------------------------------
 
-    # Plot the ground truth
-    fig = plt.figure(1, figsize=(4, 3))
-    ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=48, azim=134)
+    reduced_data = PCA(n_components=pca_num_components).fit_transform(X)
 
-    for name, label in [('Setosa', 0),
-                        ('Versicolour', 1),
-                        ('Virginica', 2)]:
-        ax.text3D(tfidf[clusters == label, 3].mean(),
-                  tfidf[clusters == label, 0].mean(),
-                  tfidf[clusters == label, 2].mean() + 2, name,
-                  horizontalalignment='center',
-                  bbox=dict(alpha=.2, edgecolor='w', facecolor='w'))
-    # Reorder the labels to have colors matching the cluster results
-    y = np.choose(clusters, [1, 2, 0]).astype(np.float)
-    ax.scatter(tfidf[:, 3], tfidf[:, 0], tfidf[:, 2], c=y, edgecolor='k')
+    fig, ax = plt.subplots()
+    for index, instance in enumerate(reduced_data):
+        # print instance, index, labels[index]
+        pca_comp_1, pca_comp_2 = reduced_data[index]
+        color = labels_color_map[labels[index]]
+        ax.scatter(pca_comp_1, pca_comp_2, c=color)
+    plt.show()
 
-    ax.w_xaxis.set_ticklabels([])
-    ax.w_yaxis.set_ticklabels([])
-    ax.w_zaxis.set_ticklabels([])
-    ax.set_xlabel('Petal width')
-    ax.set_ylabel('Sepal length')
-    ax.set_zlabel('Petal length')
-    ax.set_title('Ground Truth')
-    ax.dist = 12
-
-    fig.show()
+    # t-SNE plot
+    embeddings = TSNE(n_components=tsne_num_components)
+    Y = embeddings.fit_transform(X)
+    plt.scatter(Y[:, 0], Y[:, 1], cmap=plt.cm.Spectral)
+    plt.show()
 
 
 def find_optimal_clusters(max_k):
@@ -88,6 +71,7 @@ do_elbow_kmeans = False
 do_elbow_mini_kmeans = True
 save_doc_cluster_file = False
 fit_kmeans = True
+plot_clusters = False
 
 # loading data
 data = DataLoader().load_data(count=n_samples)
@@ -137,7 +121,9 @@ if fit_kmeans:
 
     get_top_keywords(tfidf, clusters, tfidf_vectorizer.get_feature_names(), 15)
 
-    # visualize_cluster(kmeans)
+    # visualizing the tf-idf vectors
+    if plot_clusters:
+        visualize_clusters(tfidf, clusters)
 
     doc_cluster = pd.DataFrame(columns=["doc", "cluster"])
     for doc in data_samples:
