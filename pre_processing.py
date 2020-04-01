@@ -1,7 +1,8 @@
-import json
-import pandas as pd
-import emoji
 import re
+import time
+import json
+import emoji
+import pandas as pd
 
 import data_utils as du
 
@@ -165,3 +166,12 @@ def clean_persian_tweets(tweet):
 
     cleaned_tweet = re.sub(' +', ' ', ' '.join(cleaned_text))
     return cleaned_tweet
+
+
+def standardize_tweet_time(created_at_time):
+    """
+    converting tweet created_at time to standard datetime format
+    :param created_at_time: tweet's created_at field value
+    :return:
+    """
+    return time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(created_at_time, '%a %b %d %H:%M:%S +0000 %Y'))
