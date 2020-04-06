@@ -8,7 +8,7 @@ class DataLoader:
     def __init__(self):
         self.cleaned_tweet_path = "data/cleaned/"
 
-    def load_tweets(self):
+    def load_tweets(self, n_count):
         """
         loading cleaned/processed tweets
         :return:
@@ -20,5 +20,12 @@ class DataLoader:
         for file in files:
             if file.endswith(".xlsx") and not file.startswith("~$"):
                 df = df.append(pd.read_excel(self.cleaned_tweet_path + file))
+
+        # filtering based on start and end date
+        df['created_at'] = pd.to_datetime(df['created_at'])
+
+        # if we do not want to return all records, choose a sample of n_count records
+        if n_count < len(df):
+            df = df.sample(n_count)
 
         return df.reset_index()
