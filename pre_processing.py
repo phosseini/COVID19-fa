@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import re
 import time
 import json
@@ -6,6 +8,7 @@ import pandas as pd
 
 import data_utils as du
 
+from hazm import *
 from os import listdir
 from os.path import isfile, join
 
@@ -65,8 +68,6 @@ class PreProcessing:
         if len(df_filtered) > 0:
             df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx")
 
-        return df_filtered
-
     def clean_data_json(self, save_checkpoint=100):
         """
         reading tweets' json data
@@ -124,8 +125,6 @@ class PreProcessing:
         if len(df_filtered) > 0:
             df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx")
 
-        return df_filtered
-
 
 def remove_url(text):
     text = ' '.join(x for x in text.split() if x.startswith('http') == False and x.startswith('www') == False)
@@ -166,6 +165,36 @@ def clean_persian_tweets(tweet):
 
     cleaned_tweet = re.sub(' +', ' ', ' '.join(cleaned_text))
     return cleaned_tweet
+
+
+def hazm_docs(docs, lemm=False, stem=False):
+    """
+    processing documents using Persian Hazm library
+    :param docs: list of documents. Each doc is a string
+    :param lemm: True if want to lemmatize, False, otherwise
+    :param stem: True if want to stem, False, otherwise
+    :return:
+    """
+    normalizer = Normalizer()
+    stemmer = Stemmer()
+    lemmatizer = Lemmatizer()
+    processed_docs = []
+
+    for doc in docs:
+        normalized_doc = normalizer.normalize(doc)
+        doc_sents = sent_tokenize(normalized_doc)
+        words = []
+        for sent in doc_sents:
+            words.extend(word_tokenize(sent))
+
+        if stem:
+            words = [stemmer.stem(t) for t in words]
+        if lemm:
+            words = [lemmatizer.lemmatize(t) for t in words]
+
+        processed_docs.append(" ".join(words))
+
+    return processed_docs
 
 
 def standardize_tweet_time(created_at_time):
