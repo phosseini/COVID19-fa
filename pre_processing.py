@@ -4,6 +4,7 @@ import re
 import time
 import json
 import emoji
+import string
 import pandas as pd
 
 import data_utils as du
@@ -11,6 +12,10 @@ import data_utils as du
 from hazm import *
 from os import listdir
 from os.path import isfile, join
+
+normalizer = Normalizer()
+stemmer = Stemmer()
+lemmatizer = Lemmatizer()
 
 
 class PreProcessing:
@@ -147,54 +152,58 @@ def clean_persian_tweets(tweet):
 
     tweet = emoji_free_text(tweet)
 
+    # removing more than one space
+    tweet = ' '.join(hazm_docs(tweet).split())
+
+    filtered_tweet = []
+    for token in tweet.split():
+        if not token.startswith("@") and not token.startswith("https") and not token.startswith(
+                "&amp") and token != "RT":
+            filtered_tweet.append(token.strip())
+
+    tweet = " ".join(filtered_tweet)
+
+    # removing english characters
+    tweet = re.sub(r'[a-zA-Z]', '', tweet)
+
     # removing non-relevant punctuation marks
-    puncs = list("|؟!,،?.؛")
+    puncs = list("÷!٬٫٪×،*)(ـ+ًٌٍَُِّْ][}{|«»:؛ٰٓ‌ٔ<>؟-=#:|؟!,،?.؛()«»…".replace("‌", ""))
+    puncs.extend(string.punctuation)
+    puncs = set(puncs)
     for punc in puncs:
         tweet = tweet.replace(punc, " ")
 
-    # removing more than one space
-    tweet = ' '.join(tweet.split())
+    tweet = hazm_docs(tweet)
 
-    text_tokens = tweet.split()
+    # removing single characters
+    tweet = ' '.join([t for t in tweet.split(" ") if len(t) > 1])
 
-    cleaned_text = []
-    for token in text_tokens:
-        if not token.startswith("@") and not token.startswith("https") and not token.startswith(
-                "&amp") and token != "RT":
-            cleaned_text.append(token)
-
-    cleaned_tweet = re.sub(' +', ' ', ' '.join(cleaned_text))
+    cleaned_tweet = re.sub(' +', ' ', tweet)
     return cleaned_tweet
 
 
-def hazm_docs(docs, lemm=False, stem=False):
+def hazm_docs(doc, lemm=False, stem=False):
     """
     processing documents using Persian Hazm library
-    :param docs: list of documents. Each doc is a string
+    :param doc: doc is a string
     :param lemm: True if want to lemmatize, False, otherwise
     :param stem: True if want to stem, False, otherwise
     :return:
     """
-    normalizer = Normalizer()
-    stemmer = Stemmer()
-    lemmatizer = Lemmatizer()
-    processed_docs = []
+    normalized_doc = normalizer.normalize(doc)
+    doc_sents = sent_tokenize(normalized_doc)
+    words = []
+    for sent in doc_sents:
+        words.extend(word_tokenize(sent))
 
-    for doc in docs:
-        normalized_doc = normalizer.normalize(doc)
-        doc_sents = sent_tokenize(normalized_doc)
-        words = []
-        for sent in doc_sents:
-            words.extend(word_tokenize(sent))
+    if stem:
+        words = [stemmer.stem(t) for t in words]
+    if lemm:
+        words = [lemmatizer.lemmatize(t) for t in words]
 
-        if stem:
-            words = [stemmer.stem(t) for t in words]
-        if lemm:
-            words = [lemmatizer.lemmatize(t) for t in words]
+    processed_doc = " ".join(words)
 
-        processed_docs.append(" ".join(words))
-
-    return processed_docs
+    return processed_doc
 
 
 def standardize_tweet_time(created_at_time):
