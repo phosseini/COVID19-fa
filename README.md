@@ -5,7 +5,7 @@ As COVID-19 is spreading globally, this now pandemic is shaking up all aspects o
 ## Analysis and Reproducibility reports
 ### List of jupyter notebooks:
 * `statistics.ipynb`: visualizing Iran related COVID-19 statistics including the number of infected individuals, death, and recovered cases. Also, this notebook includes the visualization of the number of posted `original` tweets over time.
-* `lda_analysis.ipynb`: topic modeling using Latent Dirichlet Allocation (LDA)
+* `lda_analysis.ipynb`: topic modeling using Latent Dirichlet Allocation (LDA). An interactive html file of all topics is also available at `lda.html`.
 * `clustering.ipynb`: clustering tweets using K-means/MiniBatchKMeans
 * `content_analysis.ipynb`: analysis of the content of tweets
 * `hashtags.ipynb`: listing and processing COVID-19 related Persian hashtags on Twitter
