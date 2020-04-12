@@ -1,9 +1,9 @@
+import time
 import copy
 import pandas as pd
 
 from datetime import timedelta
 from data_reader import DataLoader
-from pre_processing import standardize_tweet_time
 
 
 # def get_hashtags():
@@ -53,3 +53,12 @@ def tweets_count_by_day():
     tweets_counts_df = tweets_created_at.groupby(tweets_created_at.dt.floor('d')).size().reset_index(name='count')
 
     return tweets_counts_df
+
+
+def standardize_tweet_time(created_at_time):
+    """
+    converting tweet created_at time to standard datetime format
+    :param created_at_time: tweet's created_at field value
+    :return:
+    """
+    return time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(created_at_time, '%a %b %d %H:%M:%S +0000 %Y'))
