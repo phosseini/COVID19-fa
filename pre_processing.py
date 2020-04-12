@@ -204,12 +204,3 @@ def hazm_docs(doc, lemm=False, stem=False):
     processed_doc = " ".join(words)
 
     return processed_doc
-
-
-def standardize_tweet_time(created_at_time):
-    """
-    converting tweet created_at time to standard datetime format
-    :param created_at_time: tweet's created_at field value
-    :return:
-    """
-    return time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(created_at_time, '%a %b %d %H:%M:%S +0000 %Y'))

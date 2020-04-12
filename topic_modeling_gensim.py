@@ -44,13 +44,13 @@ class TopicModeling:
                            id2word=dictionary,
                            num_topics=k,
                            random_state=42,
-                           iterations=50,
+                           iterations=100,
                            per_word_topics=False,
                            eval_every=None)
         cm = CoherenceModel(model=lda, corpus=corpus, coherence='u_mass')
         coherence = cm.get_coherence()
         print('{}: {}'.format(k, coherence))
-        return k, coherence, lda
+        return coherence, lda
 
     @staticmethod
     def plot_scores(scores, ax, ylabel):
@@ -71,7 +71,7 @@ class TopicModeling:
         dictionary, corpus = self.create_corpus()
         df = pd.DataFrame(columns=["k", "coherence"])
         for k in range(2, 30):
-            k, coherence, lda = self.learn_lda_model(corpus, dictionary, k, 3)
+            coherence, lda = self.learn_lda_model(corpus, dictionary, k, 3)
             df = df.append({"k": k, "coherence": coherence}, ignore_index=True)
 
         # %% plot k vs. coherence
