@@ -5,6 +5,9 @@ import pandas as pd
 from datetime import timedelta
 from data_reader import DataLoader
 
+from os import listdir
+from os.path import isfile, join
+
 
 # def get_hashtags():
 #    hashtags = {"#کرونا": "fa", "#کروناویروس": "fa", "#coronavirus #Iran": "en", "#COVID19 #Iran": "en",
@@ -62,3 +65,21 @@ def standardize_tweet_time(created_at_time):
     :return:
     """
     return time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(created_at_time, '%a %b %d %H:%M:%S +0000 %Y'))
+
+
+def save_tweets_ids():
+    """
+    saving tweets' ids used in our analysis into a text file
+    :return:
+    """
+
+    cleaned_tweet_path = "data/cleaned/"
+    files = [f for f in listdir(cleaned_tweet_path) if isfile(join(cleaned_tweet_path, f))]
+
+    df = pd.DataFrame(columns=["id"])
+
+    for file in files:
+        if file.endswith(".xlsx") and not file.startswith("~$"):
+            df = df.append(pd.read_excel(cleaned_tweet_path + file, index_col=1))
+
+    df.reset_index()["index"].to_csv(r'data/tweet_ids.txt', header=None, index=None, sep=' ', mode='a')
