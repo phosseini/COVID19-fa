@@ -47,6 +47,13 @@ class TopicModeling:
         return dictionary, corpus
 
     def learn_lda_model(self, corpus, dictionary, k):
+        """
+        learning LDA model
+        :param corpus: corpus created by gensim
+        :param dictionary: dictionary created by gensim
+        :param k: number of topics
+        :return:
+        """
         iterations = 100
         if not self.use_mallet:
             lda = LdaMulticore(corpus,
