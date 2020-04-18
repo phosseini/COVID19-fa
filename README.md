@@ -10,3 +10,6 @@ As COVID-19 is spreading globally, this now pandemic is shaking up all aspects o
 * `content_analysis.ipynb`: analysis of the content of tweets
 * `hashtags.ipynb`: listing and processing COVID-19 related Persian hashtags on Twitter
 * `pre_processing.ipynb`: testing different ways of pre-processing Persian tweets
+
+### Tweet IDs
+* `data/tweet_ids_v1.txt`: ids of the tweets we used in the first round of analysis.
