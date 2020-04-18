@@ -4,16 +4,21 @@ import matplotlib.pyplot as plt
 from data_reader import DataLoader
 from pre_processing import hazm_docs
 
+from pathlib import Path
 from gensim import corpora
 from gensim.models import LdaModel
 from gensim.models.ldamulticore import LdaMulticore
+from gensim.models.wrappers import LdaMallet
 from gensim.models.coherencemodel import CoherenceModel
+
+home = str(Path.home())
 
 
 class TopicModeling:
-    def __init__(self):
+    def __init__(self, use_mallet=False, cpu_count=1, n_count=1000):
+        self.cpu_count = cpu_count
         # loading cleaned tweets
-        params = {"n_count": 1000}
+        params = {"n_count": n_count}
         data = DataLoader().load_tweets(n_count=params["n_count"])
         data = data["text"].values.astype('U').tolist()
 
@@ -27,6 +32,10 @@ class TopicModeling:
             persian_stop_words = f.readlines()
         self.persian_stop_words = [x.strip() for x in persian_stop_words]
 
+        # Mallet setting
+        self.use_mallet = use_mallet
+        self.path_to_mallet_binary = home + "/Mallet/bin/mallet"
+
     def create_corpus(self):
         # TODO: save the corpus and dict and load them if already exist
         T = [self.remove_stop_words(t, self.persian_stop_words) for t in self.data]
@@ -37,16 +46,26 @@ class TopicModeling:
         print('Number of documents: %d' % len(corpus))
         return dictionary, corpus
 
-    @staticmethod
-    def learn_lda_model(corpus, dictionary, k, cpu_count):
-        lda = LdaMulticore(corpus,
-                           workers=cpu_count,
-                           id2word=dictionary,
-                           num_topics=k,
-                           random_state=42,
-                           iterations=100,
-                           per_word_topics=False,
-                           eval_every=None)
+    def learn_lda_model(self, corpus, dictionary, k):
+        iterations = 100
+        if not self.use_mallet:
+            lda = LdaMulticore(corpus,
+                               id2word=dictionary,
+                               workers=self.cpu_count,
+                               num_topics=k,
+                               random_state=42,
+                               iterations=iterations,
+                               per_word_topics=False,
+                               eval_every=None)
+        else:
+            lda = LdaMallet(self.path_to_mallet_binary,
+                            corpus=corpus,
+                            id2word=dictionary,
+                            workers=self.cpu_count,
+                            num_topics=k,
+                            random_seed=42,
+                            iterations=iterations,
+                            optimize_interval=10)
         cm = CoherenceModel(model=lda, corpus=corpus, coherence='u_mass')
         coherence = cm.get_coherence()
         print('{}: {}'.format(k, coherence))
@@ -71,7 +90,7 @@ class TopicModeling:
         dictionary, corpus = self.create_corpus()
         df = pd.DataFrame(columns=["k", "coherence"])
         for k in range(2, 30):
-            coherence, lda = self.learn_lda_model(corpus, dictionary, k, 3)
+            coherence, lda = self.learn_lda_model(corpus, dictionary, k)
             df = df.append({"k": k, "coherence": coherence}, ignore_index=True)
 
         # %% plot k vs. coherence
