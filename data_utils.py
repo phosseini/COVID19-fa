@@ -9,18 +9,23 @@ from os import listdir
 from os.path import isfile, join
 
 
-# def get_hashtags():
-#    hashtags = {"#کرونا": "fa", "#کروناویروس": "fa", "#coronavirus #Iran": "en", "#COVID19 #Iran": "en",
-#                "#AyatollahsSpreadCOVID19": "en", "#کرونا_از_آمریکا": "fa", "#در_خانه_بمانیم": "fa",
-#                "#کارزار_کرونا": "fa", "کرونا": "fa", "#قرنطینه_خانگی": "fa", "#ویروس_کرونا": "fa"}
-#    return hashtags
-
-
 def get_hashtags():
-    hashtags = {"#کرونا": "fa", "#کروناویروس": "fa",
-                "#coronavirus #Iran": "en",
-                "#COVID19 #Iran": "en",
-                "#AyatollahsSpreadCOVID19": "en", "کرونا": "fa", "#ویروس_کرونا": "fa"}
+    """
+    list of Persian/Iran COVID-19 related hashtags
+    :return:
+    """
+    hashtags = {"کرونا_از_آمریکا": "fa",
+                "در_خانه_بمانیم": "fa",
+                "کارزار_کرونا": "fa",
+                "قرنطینه_خانگی": "fa",
+                "کرونا_را_جدی_بگیریم": "fa",
+                "ويروس_چينى": "fa",
+                "کرونا_ویروس": "fa",
+                "قرنطینه": "fa",
+                "کرونا": "fa",
+                "کروناویروس": "fa",
+                "ویروس_کرونا": "fa",
+                "AyatollahsSpreadCOVID19": "en"}
     return hashtags
 
 
