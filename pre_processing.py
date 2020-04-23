@@ -90,7 +90,7 @@ class PreProcessing:
         filters = {"lang": ["fa"]}
 
         tags = du.get_hashtags()
-        tags = [k for k, v in tags.items() if "fa" in v]
+        tags = [k for k, v in tags.items() if v in ["fa", "en"]]
 
         file_name_idx = 0
         for file in files:

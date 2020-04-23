@@ -37,7 +37,7 @@ class DataReader:
     def __init__(self):
         self.data_path = "data/input/"
 
-    def read_tweet_count(self):
+    def tweet_count(self):
         """
         reading the count of different types of tweets by day
         :return:
@@ -73,3 +73,20 @@ class DataReader:
         count_dict = count_dict.sort_values(count_dict.columns[4], ascending=True)
 
         return count_dict
+
+    @staticmethod
+    def tweets_count_by_day():
+        """
+        getting count of tweets per day
+        :return:
+        """
+
+        df = DataLoader().load_tweets(n_count=10000000)
+
+        df['created_at'] = df['created_at'].apply(du.standardize_tweet_time)
+        df['created_at'] = pd.to_datetime(df['created_at'], format='%Y-%m-%d %H:%M:%S')
+
+        tweets_created_at = pd.to_datetime(df['created_at'])
+        tweets_counts_df = tweets_created_at.groupby(tweets_created_at.dt.floor('d')).size().reset_index(name='count')
+
+        return tweets_counts_df
