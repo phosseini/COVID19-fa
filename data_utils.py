@@ -3,7 +3,7 @@ import copy
 import pandas as pd
 
 from datetime import timedelta
-from data_reader import DataLoader
+from data_loader import DataLoader
 
 from os import listdir
 from os.path import isfile, join
@@ -25,6 +25,10 @@ def get_hashtags():
                 "کرونا": "fa",
                 "کروناویروس": "fa",
                 "ویروس_کرونا": "fa",
+                "COVIDー19": "en",
+                "coronavirus": "en",
+                "Coronavirus": "en",
+                "COVID19": "en",
                 "AyatollahsSpreadCOVID19": "en"}
     return hashtags
 
