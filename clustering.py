@@ -3,7 +3,7 @@ import matplotlib.cm as cm
 import numpy as np
 import pandas as pd
 
-from data_reader import DataLoader
+from data_loader import DataLoader
 
 from sklearn.cluster import KMeans, MiniBatchKMeans
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer

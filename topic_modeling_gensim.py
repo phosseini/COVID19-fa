@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from data_reader import DataLoader
+from data_loader import DataLoader
 from pre_processing import hazm_docs
 
 from pathlib import Path
@@ -54,7 +54,7 @@ class TopicModeling:
         :param k: number of topics
         :return:
         """
-        iterations = 100
+        iterations = 500
         if not self.use_mallet:
             lda = LdaMulticore(corpus,
                                id2word=dictionary,

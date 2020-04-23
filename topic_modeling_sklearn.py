@@ -1,4 +1,4 @@
-from data_reader import DataLoader
+from data_loader import DataLoader
 from pre_processing import hazm_docs
 
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
