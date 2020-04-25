@@ -49,7 +49,10 @@ class DataReader:
 
         filters = {"tweet_type": ['retweet', 'quote', 'reply', 'original'], "lang": ["fa"]}
 
-        tags = du.get_hashtags()
+        hashtags = du.get_hashtags()
+        tags = []
+        for k, v in hashtags.items():
+            tags.append(k.replace('\n', '').replace('\r', '').replace('#', '').strip())
 
         for file in files:
             if file.endswith(".xlsx") and not file.startswith("~$"):

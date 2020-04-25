@@ -89,8 +89,10 @@ class PreProcessing:
 
         filters = {"lang": ["fa"]}
 
-        tags = du.get_hashtags()
-        tags = [k for k, v in tags.items() if v in ["fa", "en"]]
+        hashtags = du.get_hashtags()
+        tags = []
+        for k, v in hashtags.items():
+            tags.append(k.replace('\n', '').replace('\r', '').replace('#', '').strip())
 
         file_name_idx = 0
         for file in files:
@@ -172,8 +174,6 @@ def clean_persian_tweets(tweet):
     puncs = set(puncs)
     for punc in puncs:
         tweet = tweet.replace(punc, " ")
-
-    tweet = hazm_docs(tweet)
 
     # removing single characters
     tweet = ' '.join([t for t in tweet.split(" ") if len(t) > 1])
