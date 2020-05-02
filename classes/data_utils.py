@@ -82,7 +82,7 @@ def save_tweets_ids():
     :return:
     """
 
-    cleaned_tweet_path = "data/cleaned/"
+    cleaned_tweet_path = "../data/cleaned/"
     files = [f for f in listdir(cleaned_tweet_path) if isfile(join(cleaned_tweet_path, f))]
 
     df = pd.DataFrame(columns=["id"])
@@ -91,4 +91,4 @@ def save_tweets_ids():
         if file.endswith(".xlsx") and not file.startswith("~$"):
             df = df.append(pd.read_excel(cleaned_tweet_path + file, index_col=1))
 
-    df.reset_index()["index"].to_csv(r'data/tweet_ids.txt', header=None, index=None, sep=' ', mode='a')
+    df.reset_index()["index"].to_csv(r'data/tweet_ids_v1.0.txt', header=None, index=None, sep=' ', mode='a')

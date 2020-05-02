@@ -1,7 +1,6 @@
 from data_loader import DataLoader
-from pre_processing import hazm_docs
 
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 
 n_samples = 1000000
@@ -29,7 +28,7 @@ for i in range(len(data)):
     data[i] = " ".join(t for t in data[i].split() if not t.strip().isdigit())
 
 # loading persian stop words
-with open("data/persian_stop_words.txt", "r") as f:
+with open("../data/persian_stop_words.txt", "r") as f:
     persian_stop_words = f.readlines()
 persian_stop_words = [x.strip() for x in persian_stop_words]
 

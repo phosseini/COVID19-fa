@@ -2,11 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from data_loader import DataLoader
-from pre_processing import hazm_docs
 
 from pathlib import Path
 from gensim import corpora
-from gensim.models import LdaModel
 from gensim.models.ldamulticore import LdaMulticore
 from gensim.models.wrappers import LdaMallet
 from gensim.models.coherencemodel import CoherenceModel
@@ -28,7 +26,7 @@ class TopicModeling:
         self.data = data
 
         # loading persian stop words
-        with open("data/persian_stop_words.txt", "r") as f:
+        with open("../data/persian_stop_words.txt", "r") as f:
             persian_stop_words = f.readlines()
         self.persian_stop_words = [x.strip() for x in persian_stop_words]
 

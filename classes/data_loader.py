@@ -8,7 +8,7 @@ import data_utils as du
 
 class DataLoader:
     def __init__(self):
-        self.cleaned_tweet_path = "data/cleaned/"
+        self.cleaned_tweet_path = "../data/cleaned/"
 
     def load_tweets(self, n_count, convert_time=False):
         """
@@ -35,7 +35,7 @@ class DataLoader:
 
 class DataReader:
     def __init__(self):
-        self.data_path = "data/input/"
+        self.data_path = "../data/input/"
 
     def tweet_count(self):
         """

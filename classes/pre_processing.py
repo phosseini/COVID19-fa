@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 import re
-import time
 import json
 import emoji
 import string
@@ -20,7 +19,7 @@ lemmatizer = Lemmatizer()
 
 class PreProcessing:
     def __init__(self):
-        self.data_path = "data/input/"
+        self.data_path = "../data/input/"
         self.cleaned_tweet_path = "data/cleaned/tweets_"
 
     def clean_data_excel(self, count=100, save_checkpoint=100):

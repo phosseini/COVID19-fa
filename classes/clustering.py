@@ -1,7 +1,4 @@
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-import numpy as np
-import pandas as pd
 
 from data_loader import DataLoader
 
@@ -34,7 +31,7 @@ class Clustering:
         self.data = data
 
         # loading persian stop words
-        with open("data/persian_stop_words.txt", "r") as f:
+        with open("../data/persian_stop_words.txt", "r") as f:
             persian_stop_words = f.readlines()
         self.persian_stop_words = [x.strip() for x in persian_stop_words]
 
