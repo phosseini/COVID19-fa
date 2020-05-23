@@ -2,8 +2,6 @@
 
 As COVID-19 is spreading globally, this now pandemic is shaking up all aspects of daily life in affected countries. While each country will go through its own unique experience, there may be much shared on how different populations react to this pandemic. Iran, along with China, South Korea, and Italy has been among the countries that have been hit hardest in the early wave of COVID-19 spread. Leveraging Machine Learning and Natural Language Processing techniques, we are conducting an ongoing analysis of the reaction of the Persian/Farsi speaking users on social media starting with the case of Twitter.
 
-Here you can take a look at our preprint: https://arxiv.org/abs/2005.08400
-
 
 ## Analysis and Reproducibility reports
 ### List of jupyter notebooks in `notebooks` folder:
