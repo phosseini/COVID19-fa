@@ -18,3 +18,15 @@ Here you can take a look at our preprint: https://arxiv.org/abs/2005.08400
 * `persian_stop_words.txt`: list of Persian stop words.
 * `tags.txt`: list of Twitter hashtags in Persian and English on Iran CVOID-19. 
 * `tweet_ids_v1.0.txt`: ids of the tweets we used in the first round of analysis.
+
+### How to cite our work?
+You can cite our [arXiv paper](https://arxiv.org/abs/2005.08400):
+
+```
+@article{hosseini2020content,
+  title={Content analysis of Persian/Farsi Tweets during COVID-19 pandemic in Iran using NLP},
+  author={Hosseini, Pedram and Hosseini, Poorya and Broniatowski, David A},
+  journal={arXiv preprint arXiv:2005.08400},
+  year={2020}
+}
+```
