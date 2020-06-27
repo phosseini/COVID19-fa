@@ -2,8 +2,6 @@
 
 As COVID-19 is spreading globally, this now pandemic is shaking up all aspects of daily life in affected countries. While each country will go through its own unique experience, there may be much shared on how different populations react to this pandemic. Iran, along with China, South Korea, and Italy has been among the countries that have been hit hardest in the early wave of COVID-19 spread. Leveraging Machine Learning and Natural Language Processing techniques, we are conducting an ongoing analysis of the reaction of the Persian/Farsi speaking users on social media starting with the case of Twitter.
 
-Here you can take a look at our preprint: https://arxiv.org/abs/2005.08400
-
 
 ## Analysis and Reproducibility reports
 ### List of jupyter notebooks in `notebooks` folder:
@@ -18,3 +16,15 @@ Here you can take a look at our preprint: https://arxiv.org/abs/2005.08400
 * `persian_stop_words.txt`: list of Persian stop words.
 * `tags.txt`: list of Twitter hashtags in Persian and English on Iran CVOID-19. 
 * `tweet_ids_v1.0.txt`: ids of the tweets we used in the first round of analysis.
+
+### How to cite our work?
+You can cite our [arXiv paper](https://arxiv.org/abs/2005.08400):
+
+```
+@article{hosseini2020content,
+  title={Content analysis of Persian/Farsi Tweets during COVID-19 pandemic in Iran using NLP},
+  author={Hosseini, Pedram and Hosseini, Poorya and Broniatowski, David A},
+  journal={arXiv preprint arXiv:2005.08400},
+  year={2020}
+}
+```
