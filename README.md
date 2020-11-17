@@ -18,13 +18,17 @@ As COVID-19 is spreading globally, this now pandemic is shaking up all aspects o
 * `tweet_ids_v1.0.txt`: ids of the tweets we used in the first round of analysis.
 
 ### How to cite our work?
-You can cite our [arXiv paper](https://arxiv.org/abs/2005.08400):
+You can cite our [paper](https://www.aclweb.org/anthology/2020.nlpcovid19-2.26/):
 
-```
-@article{hosseini2020content,
-  title={Content analysis of Persian/Farsi Tweets during COVID-19 pandemic in Iran using NLP},
-  author={Hosseini, Pedram and Hosseini, Poorya and Broniatowski, David A},
-  journal={arXiv preprint arXiv:2005.08400},
-  year={2020}
+```bibtex
+@inproceedings{hosseini-etal-2020-content,
+    title = "Content analysis of {P}ersian/{F}arsi Tweets during {COVID}-19 pandemic in {I}ran using {NLP}",
+    author = "Hosseini, Pedram and Hosseini, Poorya and Broniatowski, David",
+    booktitle = "Proceedings of the 1st Workshop on {NLP} for {COVID}-19 (Part 2) at {EMNLP} 2020",
+    month = dec,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.nlpcovid19-2.26",
 }
 ```
