@@ -20,7 +20,7 @@ As COVID-19 is spreading globally, this now pandemic is shaking up all aspects o
 | File name | # of tweet ids | Time period |
 | :---:         |     :---:      |          :---: |
 | `../data/tweet_ids_v1.0.txt` | 530,249 | March 13, 2020 - April 19, 2020 |
-| `../data/tweet_ids_v2.0.txt` | 1,441,426 | March 13, 2020 - November 16, 2020 |
+| `../data/tweet_ids_v2.0.txt` | 1,441,426 | March 13, 2020 - November 15, 2020 |
 
 ### How to cite our work?
 You can cite our [paper](https://www.aclweb.org/anthology/2020.nlpcovid19-2.26/):
