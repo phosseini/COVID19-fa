@@ -44,15 +44,15 @@ class TopicModeling:
         print('Number of documents: %d' % len(corpus))
         return dictionary, corpus
 
-    def learn_lda_model(self, corpus, dictionary, k):
+    def learn_lda_model(self, corpus, dictionary, k, iterations=100):
         """
         learning LDA model
         :param corpus: corpus created by gensim
         :param dictionary: dictionary created by gensim
         :param k: number of topics
+        :param iterations: number of iterations
         :return:
         """
-        iterations = 500
         if not self.use_mallet:
             lda = LdaMulticore(corpus,
                                id2word=dictionary,
