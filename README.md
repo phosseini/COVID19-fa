@@ -14,7 +14,7 @@ As COVID-19 is spreading globally, this now pandemic is shaking up all aspects o
 
 ### List of files in `data` folder:
 * `persian_stop_words.txt`: list of Persian stop words.
-* `tags.txt`: list of Twitter hashtags in Persian and English on Iran CVOID-19. 
+* `tags.txt`: list of Twitter hashtags in Persian and English on Iran COVID-19. 
 
 #### List of `tweet id` files
 | File name | # of tweet ids | Time period |
