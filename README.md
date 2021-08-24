@@ -14,13 +14,15 @@ As COVID-19 is spreading globally, this now pandemic is shaking up all aspects o
 
 ### List of files in `data` folder:
 * `persian_stop_words.txt`: list of Persian stop words.
-* `tags.txt`: list of Twitter hashtags in Persian and English on Iran CVOID-19. 
+* `tags.txt`: list of Twitter hashtags in Persian and English on Iran COVID-19. 
 
 #### List of `tweet id` files
 | File name | # of tweet ids | Time period |
 | :---:         |     :---:      |          :---: |
 | `../data/tweet_ids_v1.0.txt` | 530,249 | March 13, 2020 - April 19, 2020 |
 | `../data/tweet_ids_v2.0.txt` | 1,441,426 | March 13, 2020 - November 15, 2020 |
+| `../data/tweet_ids_v3_1.txt` | 952,333 | March 13, 2020 - April 22, 2021 (Part 1) |
+| `../data/tweet_ids_v3_2.txt` | 952,335 | March 13, 2020 - April 22, 2021 (Part 2) |
 
 ### How to cite our work?
 You can cite our [paper](https://www.aclweb.org/anthology/2020.nlpcovid19-2.26/):
