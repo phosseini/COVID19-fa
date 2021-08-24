@@ -89,7 +89,17 @@ def get_hashtags():
         "#کرونای_جهش_یافته": "fa",
         "#ویروس_جهش_یافته": "fa",
         "#شهید_واکسن": "fa",
-        "#پیک_چهارم": "fa"
+        "#پیک_چهارم": "fa",
+        "#بسیج_مردم_علیه_کرونا": "fa",
+        "#من_واکسن_نمیزنم": "fa",
+        "#فتنه_اجباری_زدن_واکسن": "fa",
+        "#پیک_پنجم_کرونا": "fa",
+        "#پیک_ششم_کرونا": "fa",
+        "#واكسن_ایرانی": "fa",
+        "#خیز_پنجم_کرونا": "fa",
+        "#بحران_کرونا": "fa",
+        "#کرونا_جان_میگیرد": "fa",
+        "#مطالبه_واکسن": "fa"
     }
     return hashtags
 
@@ -135,5 +145,5 @@ def save_tweets_ids():
         if file.endswith(".xlsx") and not file.startswith("~$"):
             df = df.append(pd.read_excel(cleaned_tweet_path + file, index_col=1))
 
-    df.reset_index()["index"].to_csv(r'../data/tweet_ids_v2.0.txt', header=None, index=None, sep=' ', mode='a')
+    df.reset_index()["index"].to_csv(r'../data/tweet_ids_v3.0.txt', header=None, index=None, sep=' ', mode='a')
     print(len(df))
