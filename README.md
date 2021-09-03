@@ -24,6 +24,9 @@ As COVID-19 is spreading globally, this now pandemic is shaking up all aspects o
 | `../data/tweet_ids_v3_1.txt` | 952,333 | March 13, 2020 - April 22, 2021 (Part 1) |
 | `../data/tweet_ids_v3_2.txt` | 952,335 | March 13, 2020 - April 22, 2021 (Part 2) |
 
+### Requirements for LDA analysis
+* We use Gensim's python wrapper for `Mallet` in our topic modeling. Please make sure you have properly installed Mallet before running LDA topic modeling examples. You can find more instructions [here](https://radimrehurek.com/gensim_3.8.3/models/wrappers/ldamallet.html) and the official guide to installing Mallet [here](http://mallet.cs.umass.edu/download.php).
+
 ### How to cite our work?
 You can cite our [paper](https://www.aclweb.org/anthology/2020.nlpcovid19-2.26/):
 
