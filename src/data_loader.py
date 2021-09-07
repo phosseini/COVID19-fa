@@ -1,3 +1,4 @@
+import math
 import pandas as pd
 
 from os import listdir
@@ -37,11 +38,27 @@ class DataReader:
     def __init__(self):
         self.data_path = "../data/input/"
 
-    def tweet_count_excel(self):
+    def tweet_count(self, file_format='xlsx'):
         """
         reading the count of different types of tweets by day
+        :param file_format: file format of downloaded tweets that can be one of the following values: ['xlsx', 'json']
         :return:
         """
+
+        def find_tweet_type(df_row):
+            """
+            finding tweet type given a tweet object as pandas data frame row
+            :param df_row: tweet object as pandas data frame row
+            :return:
+            """
+            if df_row['text'].startswith("RT @"):
+                return "retweet"
+            elif not math.isnan(df_row["in_reply_to_status_id"]):
+                return "reply"
+            elif not math.isnan(df_row["quoted_status_id"]):
+                return "quote"
+            else:
+                return "original"
 
         count_dict = {}
 
@@ -55,64 +72,20 @@ class DataReader:
             tags.append(k.replace('\n', '').replace('\r', '').replace('#', '').strip())
 
         for file in files:
-            if file.endswith(".xlsx") and not file.startswith("~$"):
-                df = pd.read_excel(self.data_path + file)
+            if file.endswith(".{}".format(file_format)) and not file.startswith("~$"):
+                if file_format == 'json':
+                    df = pd.read_json(self.data_path + file, lines=True)
+                elif file_format == 'xlsx':
+                    df = pd.read_excel(self.data_path + file)
 
                 for index, row in df.iterrows():
-                    if row["tweet_type"] in filters["tweet_type"] and row["lang"] in filters["lang"] and any(
-                            tag in row["text"] for tag in tags):
-                        date = pd.to_datetime(du.standardize_tweet_time(row["created_at"]), format='%Y-%m-%d').date()
-
+                    if row["lang"] in filters["lang"] and any(tag in row["text"] for tag in tags):
+                        date = row["created_at"].date()
                         # check if the day is already in the dictionary
                         if date not in count_dict:
                             count_dict[date] = {"retweet": 0, "quote": 0, "reply": 0, "original": 0}
 
-                        count_dict[date][row["tweet_type"]] += 1
-
-        # reformatting
-        count_dict = pd.DataFrame(count_dict).T
-        count_dict["date"] = count_dict.index
-        count_dict = count_dict.reset_index(drop=True)
-        print(list(count_dict))
-        print(count_dict)
-        count_dict = count_dict.sort_values(count_dict.columns[4], ascending=True)
-
-        return count_dict
-
-    def tweet_count_json(self):
-        """
-        reading the count of different types of tweets by day
-        :return:
-        """
-
-        count_dict = {}
-
-        files = [f for f in listdir(self.data_path) if isfile(join(self.data_path, f))]
-
-        filters = {"tweet_type": ['retweet', 'quote', 'reply', 'original'], "lang": ["fa"]}
-
-        hashtags = du.get_hashtags()
-        tags = []
-        for k, v in hashtags.items():
-            tags.append(k.replace('\n', '').replace('\r', '').replace('#', '').strip())
-
-        for file in files:
-            if file.endswith(".json") and not file.startswith("~$"):
-                df = pd.read_json(self.data_path + file, lines=True)
-
-                print(len(df))
-                break
-
-                for index, row in df.iterrows():
-                    if row["tweet_type"] in filters["tweet_type"] and row["lang"] in filters["lang"] and any(
-                            tag in row["text"] for tag in tags):
-                        date = pd.to_datetime(du.standardize_tweet_time(row["created_at"]), format='%Y-%m-%d').date()
-
-                        # check if the day is already in the dictionary
-                        if date not in count_dict:
-                            count_dict[date] = {"retweet": 0, "quote": 0, "reply": 0, "original": 0}
-
-                        count_dict[date][row["tweet_type"]] += 1
+                        count_dict[date][find_tweet_type(row)] += 1
 
         # reformatting
         count_dict = pd.DataFrame(count_dict).T
