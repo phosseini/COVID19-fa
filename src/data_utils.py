@@ -144,7 +144,7 @@ def save_tweets_ids():
 
     for file in files:
         if file.endswith(".xlsx") and not file.startswith("~$"):
-            df = df.append(pd.read_excel(cleaned_tweet_path + file, index_col=1))
+            df = df.append(pd.read_excel(cleaned_tweet_path + file, index_col=1, engine='openpyxl'))
 
-    df.reset_index()["index"].to_csv(r'../data/tweet_ids_v3.0.txt', header=None, index=None, sep=' ', mode='a')
+    df.reset_index()["index"].to_csv(r'../data/tweet_ids_v4.0.txt', header=None, index=None, sep=' ', mode='a')
     print(len(df))
