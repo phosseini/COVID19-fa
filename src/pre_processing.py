@@ -62,7 +62,8 @@ class PreProcessing:
                                                          ignore_index=True)
                         # saving file at checkpoint
                         if len(df_filtered) % save_checkpoint == 0:
-                            df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx")
+                            df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx",
+                                                 engine='xlsxwriter')
                             file_name_idx += 1
 
                             # reset the data frame
@@ -70,7 +71,7 @@ class PreProcessing:
 
         # saving the last file
         if len(df_filtered) > 0:
-            df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx")
+            df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx", engine='xlsxwriter')
 
     def clean_data_json(self, save_checkpoint=100):
         """
@@ -121,7 +122,8 @@ class PreProcessing:
                                                              ignore_index=True)
                             # saving file at checkpoint
                             if len(df_filtered) % save_checkpoint == 0:
-                                df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx")
+                                df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx",
+                                                     engine='xlsxwriter')
                                 file_name_idx += 1
 
                                 # reset the data frame
@@ -129,7 +131,7 @@ class PreProcessing:
 
         # saving the last file
         if len(df_filtered) > 0:
-            df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx")
+            df_filtered.to_excel(self.cleaned_tweet_path + str(file_name_idx) + ".xlsx", engine='xlsxwriter')
 
 
 def remove_url(text):

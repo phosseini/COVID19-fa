@@ -22,7 +22,7 @@ class DataLoader:
 
         for file in files:
             if file.endswith(".xlsx") and not file.startswith("~$"):
-                df = df.append(pd.read_excel(self.cleaned_tweet_path + file))
+                df = df.append(pd.read_excel(self.cleaned_tweet_path + file, engine='openpyxl'))
 
         if convert_time:
             df['created_at'] = pd.to_datetime(df['created_at'])
