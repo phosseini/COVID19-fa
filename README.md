@@ -23,6 +23,9 @@ As COVID-19 is spreading globally, this now pandemic is shaking up all aspects o
 | `../data/tweet_ids_v2.0.txt` | 1,441,426 | March 13, 2020 - November 15, 2020 |
 | `../data/tweet_ids_v3_1.txt` | 952,333 | March 13, 2020 - April 22, 2021 (Part 1) |
 | `../data/tweet_ids_v3_2.txt` | 952,335 | March 13, 2020 - April 22, 2021 (Part 2) |
+| `../data/tweet_ids_v4.0.txt` | 286,645 | April 23, 2021 - January 3, 2022 <sup>:warning:</sup> |
+
+:warning:&nbsp;There are some missing tweets from early 2021-06 to late 2021-08 since our tweet collection servers were temporarily down.
 
 ### Requirements for LDA analysis
 * We use Gensim's python wrapper for `Mallet` in our topic modeling. Please make sure you have properly installed Mallet before running LDA topic modeling examples. You can find more instructions [here](https://radimrehurek.com/gensim_3.8.3/models/wrappers/ldamallet.html) and the official guide to installing Mallet [here](http://mallet.cs.umass.edu/download.php).
