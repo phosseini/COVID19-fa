@@ -29,6 +29,7 @@ As COVID-19 is spreading globally, this now pandemic is shaking up all aspects o
 
 ### Requirements for LDA analysis
 * We use Gensim's python wrapper for `Mallet` in our topic modeling. Please make sure you have properly installed Mallet before running LDA topic modeling examples. You can find more instructions [here](https://radimrehurek.com/gensim_3.8.3/models/wrappers/ldamallet.html) and the official guide to installing Mallet [here](http://mallet.cs.umass.edu/download.php).
+    * **[Note]** Starting from Gensim 4.0, [some third party wrappers](https://github.com/RaRe-Technologies/gensim/wiki/Migrating-from-Gensim-3.x-to-4#15-removed-third-party-wrappers), including Mallet, are removed from Gensim. Please make sure you have `gensim==3.8.0` installed if you want to use Mallet.
 
 ### How to cite our work?
 You can cite our [paper](https://www.aclweb.org/anthology/2020.nlpcovid19-2.26/):
